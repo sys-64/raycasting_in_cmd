@@ -62,13 +62,16 @@ void cast_thee(char* screen) {
 }
 
 void render(char* screen) {
-	system("cls");
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD coord;
 
 	for (int y = 0; y < t_height; y++) {
 		for (int x = 0; x < t_width; x++) {
+			coord.X = x;
+			coord.Y = y;
+			SetConsoleCursorPosition(hConsole, coord);
 			std::cout << screen[y * t_width + x];
 		}
-		std::cout << std::endl;
 	}
 }
 
@@ -99,9 +102,8 @@ int main() {
 			p_pos.x -= cos(p_angle_rad) * 0.1f;
 			p_pos.y -= sin(p_angle_rad) * 0.1f;
 		}
-
-		// Add a small delay to make the movement/rendering smoother
-		Sleep(100);
+		
+		Sleep(25);
 	}
 
 	return 0;
